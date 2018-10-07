@@ -10,10 +10,11 @@ The unique part of CNote outside of the KYC, is the convertible note feature and
 
 The startup FICO score is an innovative metric to track the credit worthiness of a startup. Based on transactions and information reported from the loaned value, companies gain a score which can be viewed by new potential investors. This score is also tied to the founders, creating a new type of credit history tied to the startup world. 
 
-# Technologies Used
-
+## Technologies Used  
+  
+- Bloom 
 - Dharma
-
+- Bloqboard  
 
 # frontend
   
