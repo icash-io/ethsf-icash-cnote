@@ -30,12 +30,14 @@ iCash ETH SF Project
 
 5. Run `yarn start` to start backend development.
 
+6. Run `php -S 0.0.0.0:8008` to run.
+
 ## Testing
 
 Running `npm test` will run the unit tests with karma. (not implemented)
 ================
 
-# Startup investment marketplace for convertible notes/SAFT's
+# Startup investment platform for convertible notes/SAFT's
 
 The CNote platform where investors safely invest in startups through convertible notes/SAFTs. To get listed on CNote, startups use Bloom to get a KYC for all founders, proving the legitimacy of the company. After approval, they can list proposals for investors. Investors can view a list of verified companies, view details, and set the appropiate terms for convertible note/SAFTs.
 
