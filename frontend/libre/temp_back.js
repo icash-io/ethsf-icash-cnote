@@ -1,6 +1,6 @@
 // Setup Stuff 
 
-// var Web3 = require('web3');
+var Web3 = require('web3');
 
 // const provider = window.web3.currentProvider;
 // const dharma = new Dharma(provider);
@@ -14,14 +14,13 @@
 
 function  bloomCheck(){
 	$("#bloomid").attr("src","./images/bloomID.png"); //jquery call
-	// accountRegistry = AccountRegistry.at("[0xfbc650e80d6796dff3101457eac4af994e4d2062]")
-	// hasBloomId = accountRegistry.addressBelongsToAccount.call(address)
+	accountRegistry = AccountRegistry.at("[0xfbc650e80d6796dff3101457eac4af994e4d2062]")
+	hasBloomId = accountRegistry.addressBelongsToAccount.call(address)
 
-	// if(hasBloomId == 1){
-	// 	$("#bloomid").attr("src","./images/bloomID.png"); //jquery call
-	// }
+	if(hasBloomId == 1){
+		$("#bloomid").attr("src","./images/bloomID2.png"); //jquery call
+	}
 }
-)
 
 // DHARMA API 
 // https://developer.dharma.io/tutorials/dharma-js
