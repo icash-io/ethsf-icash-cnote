@@ -115,14 +115,93 @@ function loancreate(){
 
         salt: new BigNumber(Math.floor(Math.random() * 100000))
     };
-}
+	var dharmaDebtOrder = await dharma.adapters.simpleInterestLoan.toDebtOrder(simpleInterestLoan);
+	    console.log('Debt order created: ' + JSON.stringify(dharmaDebtOrder, null, 2) + '\n')
 
+	    const balance = await dharma.token.getBalanceAsync(principalToken, defaultAccount)
+	    const allowance = await dharma.token.getProxyAllowanceAsync(principalToken, defaultAccount)
+	    console.log("Balance: " + balance.toNumber())
+	    console.log("Allowance: " + allowance.toNumber() + '\n')
+
+	    // Sign as debtor
+	    dharmaDebtOrder.debtorSignature = await dharma.sign.asDebtor(dharmaDebtOrder)
+	    console.log('Debt order signed by debtor: ' + JSON.stringify(dharmaDebtOrder, null, 2) + '\n')
+
+	    // Post order to the Relayer
+	    var data = {
+	        kernelAddress: dharmaDebtOrder.kernelVersion,
+	        repaymentRouterAddress: dharmaDebtOrder.issuanceVersion,
+	        principalAmount: dharmaDebtOrder.principalAmount,
+	        principalTokenAddress: dharmaDebtOrder.principalToken,
+	        debtorAddress: dharmaDebtOrder.debtor,
+	        debtorFee: dharmaDebtOrder.debtorFee,
+	        termsContractAddress: dharmaDebtOrder.termsContract,
+	        termsContractParameters: dharmaDebtOrder.termsContractParameters,
+	        expirationTime: new Date(dharmaDebtOrder.expirationTimestampInSec.mul(1000).toNumber()).toISOString(),
+	        salt: dharmaDebtOrder.salt,
+	        debtorSignature: JSON.stringify(dharmaDebtOrder.debtorSignature),
+	        underwriterAddress: dharmaDebtOrder.underwriter,
+	        underwriterRiskRating: dharmaDebtOrder.underwriterRiskRating,
+	        underwriterFee: dharmaDebtOrder.underwriterFee,
+	        underwriterSignature: JSON.stringify(dharmaDebtOrder.underwriterSignature),
+	        relayerAddress: dharmaDebtOrder.relayer,
+	        relayerFee: dharmaDebtOrder.relayerFee
+	    }
+
+	    var response = await client.post('/api/v0/debts', data)
+}
 
 // import { Dharma } from "@dharmaprotocol/dharma.js";
 // const host = "http://localhost:8545";
 
 function loanaccept(){
+	var relayerOrder = (await client.get('/api/v0/debts/' + response.body.id)).body
 
+	    dharmaDebtOrder = {
+	        kernelVersion: relayerOrder.kernelAddress,
+	        issuanceVersion: relayerOrder.repaymentRouterAddress,
+	        principalAmount: new BigNumber(relayerOrder.principalAmount),
+	        principalToken: relayerOrder.principalTokenAddress,
+	        debtor: relayerOrder.debtorAddress,
+	        debtorFee: new BigNumber(relayerOrder.debtorFee),
+	        termsContract: relayerOrder.termsContractAddress,
+	        termsContractParameters: relayerOrder.termsContractParameters,
+	        expirationTimestampInSec: new BigNumber(new Date(relayerOrder.expirationTime).getTime() / 1000),
+	        salt: new BigNumber(relayerOrder.salt),
+	        debtorSignature: JSON.parse(relayerOrder.debtorSignature),
+	        relayer: relayerOrder.relayerAddress,
+	        relayerFee: new BigNumber(relayerOrder.relayerFee),
+	        underwriter: relayerOrder.underwriterAddress,
+	        underwriterRiskRating: new BigNumber(relayerOrder.underwriterRiskRating),
+	        underwriterFee: new BigNumber(relayerOrder.underwriterFee),
+	        underwriterSignature: JSON.parse(relayerOrder.underwriterSignature),
+	        relayer: relayerOrder.relayerAddress,
+	        relayerFee: new BigNumber(relayerOrder.relayerFee)
+	    }
+
+	    console.log("SIGN: " + JSON.stringify(dharmaDebtOrder.debtorSignature, null, 2) + '\n')
+
+	    // Parse debt order
+	    const parsedOrder = await dharma.adapters.simpleInterestLoan.fromDebtOrder(dharmaDebtOrder)
+
+	    // Set creditor allowance for principal
+	    let allowanceTx = await dharma.token.setUnlimitedProxyAllowanceAsync(principalToken, { from: creditor })
+	    await dharma.blockchain.awaitTransactionMinedAsync(allowanceTx, 1000, 60000)
+
+	    // Fill debt order
+	    dharmaDebtOrder.creditor = creditor;
+
+	    console.log('Relayer order: ' + JSON.stringify(dharmaDebtOrder, null, 2) + '\n')
+
+	    const fillTx = await dharma.order.fillAsync(dharmaDebtOrder, { from: creditor });
+	    const receipt = await dharma.blockchain.awaitTransactionMinedAsync(fillTx, 1000, 60000)
+
+	    const [debtOrderFilledLog] = compact(ABIDecoder.decodeLogs(receipt.logs));
+
+	    console.log('fillAsync txHash: ' + fillTx)
+	    console.log('Debt order filled by creditor: ' + JSON.stringify(debtOrderFilledLog, null, 2) + '\n')
+
+	    await client.put('/api/v0/debts/' + response.body.id, { status: 'Filled'} )
 }
 
 function instantiateDharma() {
@@ -154,7 +233,7 @@ function instantiateDharma() {
     };
 
     return new Dharma.default(web3.currentProvider, dharmaConfig);
-}`
+}
 
 // RCN API
 // https://github.com/ripio/rcn-network
