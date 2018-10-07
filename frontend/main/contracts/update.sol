@@ -7,7 +7,7 @@ contract update {
   uint revenue_num;
 
   constructor(uint _transactions_num, uint _users_num, uint _revenue_num) public {
-      company = msg.sender;
+      company_address = msg.sender;
       transactions_num = _transactions_num;
       users_num = _users_num;
       revenue_num = _revenue_num;
@@ -21,7 +21,7 @@ contract update {
 
   function getBlockNumber() constant public returns (uint) { return block.number; }
 
-  function setTransactions(uint new_transactions_num) public { transactions_num = new_transcations_num; }
+  function setTransactions(uint new_transactions_num) public { transactions_num = new_transactions_num; }
 
   function setUsers(uint new_users_num) public { users_num = new_users_num;}
 
