@@ -22,6 +22,8 @@ const transactionObject = {
 accountRegistry = AccountRegistry.at("[address of registry contract]")
 hasBloomId = accountRegistry.addressBelongsToAccount.call(address)
 
+$("#bloomid").attr("src","./images/bloomID.png"); //jquery call
+
 
 // DHARMA API 
 // https://developer.dharma.io/tutorials/dharma-js
