@@ -1,17 +1,6 @@
 // Setup Stuff 
 
-window.addEventListener('load', function() {
-
-  // Check if Web3 has been injected by the browser:
-  if (typeof web3 !== 'undefined') {
-    // You have a web3 browser! Continue below!
-    startApp(web3);
-  } else {
-     // Warn the user that they need to get a web3 browser
-     // Or install MetaMask, maybe with a nice graphic.
-  }
-
-})// mapping(address => uint256) public accountByAddress;
+// mapping(address => uint256) public accountByAddress;
 
 // const provider = window.web3.currentProvider;
 // const dharma = new Dharma(provider);
@@ -22,11 +11,17 @@ window.addEventListener('load', function() {
 // Bloom API: Binary check if there is an associated address with account.  Web3
 // https://bloom.co/docs/contracts/accounts#address-belongs-to-account
 // testnet address: 0xfbc650e80d6796dff3101457eac4af994e4d2062
+// Make sure to run apache php server: php -S 0.0.0.0:8008
 
 function  bloomCheck(){
 	$("#bloomid").attr("src","./images/bloomID.png"); //jquery call
-	accountRegistry = AccountRegistry.at("[0xfbc650e80d6796dff3101457eac4af994e4d2062]")
-	hasBloomId = accountRegistry.addressBelongsToAccount.call(address)
+
+	alert("Next Step");
+
+	accountRegistry = AccountRegistry.at("[0xfbc650e80d6796dff3101457eac4af994e4d2062]");
+	hasBloomId = accountRegistry.addressBelongsToAccount.call(address);
+
+	alert("Smart Contract activated");
 
 	if(hasBloomId == 1){
 		$("#bloomid").attr("src","./images/bloomID2.png"); //jquery call
