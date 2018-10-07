@@ -11,6 +11,8 @@ export default function(app) {
   app.use('/api/user', require('./api/user'));
 
   app.use('/api/doc', require('./api/kycDocument'));
+
+  app.use('/api/dharma', require('./api/dharma'));
   
   // app.use('/auth', require('./auth').default);
 
