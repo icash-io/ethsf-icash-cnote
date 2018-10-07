@@ -20,10 +20,18 @@
 // ABIDecoder.addABI(RepaymentRouter.abi);
 // mapping(address => uint256) public accountByAddress;
 
+
 const provider = window.web3.currentProvider;
+// const dharma = new Dharma(provider);
+
+const dharma = new Dharma("http://localhost:8545"); // for local chain
+import { Dharma } from "@dharmaprotocol/dharma.js"; // for dhamra API
+import { Dharma, Web3 } from "@dharmaprotocol/dharma.js";
+const host = "http://localhost:8545";
+const provider = new Web3.providers.HttpProvider(host);
+
+// const provider = window.web3.currentProvider; //WEB3 off window object
 const dharma = new Dharma(provider);
-
-
 
 // Functions/API that we need. 
 
@@ -33,7 +41,6 @@ const dharma = new Dharma(provider);
 // Make sure to run apache php server: php -S 0.0.0.0:8008
 
 function  bloomCheck(){
-
 
 	var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
 	var URL = "https://bloom.co/app/signin";
@@ -75,8 +82,7 @@ function milestones(transactions, users, revenue){
 	 })
 }
 
-// DHARMA API 
-// https://developer.dharma.io/tutorials/dharma-js
+// Bloqboard API 
 
 function loancreate(){
 
@@ -249,6 +255,8 @@ function dharmaloancreate(){
     expiresInUnit: "days",
 });
 }
+
+
 // RCN API
 // https://github.com/ripio/rcn-network
 
