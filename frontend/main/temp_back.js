@@ -2,8 +2,8 @@
 
 // mapping(address => uint256) public accountByAddress;
 
-// const provider = window.web3.currentProvider;
-// const dharma = new Dharma(provider);
+const provider = window.web3.currentProvider;
+const dharma = new Dharma(provider);
 
 
 
@@ -35,19 +35,20 @@ function  bloomCheck(){
 }
 
 
-
-
-
-
 // DHARMA API 
 // https://developer.dharma.io/tutorials/dharma-js
+
+function dharmaloancreate(){
+
+	const provider = window.web3.currentProvider;
+	const dharma = new Dharma(provider);
+}
 
 
 // import { Dharma } from "@dharmaprotocol/dharma.js";
 // const host = "http://localhost:8545";
 
-// const provider = window.web3.currentProvider;
-// const dharma = new Dharma(provider);
+
 
 // RCN API
 // https://github.com/ripio/rcn-network
