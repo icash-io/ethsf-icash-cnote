@@ -80,8 +80,41 @@ function milestones(transactions, users, revenue){
 
 function loancreate(){
 
-	const provider = window.web3.currentProvider;
-	const dharma = new Dharma(provider);
+	const dharma = await instantiateDharma()
+    const tokenRegistry = await dharma.contracts.loadTokenRegistry()
+    const principalTokenSymbol = "ETH"
+    const principalToken = await tokenRegistry.getTokenAddressBySymbol.callAsync(principalTokenSymbol)
+    const debtor = web3.eth.accounts[0]
+    const creditor = debtor
+    const simpleInterestLoan = {
+        principalToken,
+        principalTokenSymbol,
+        principalAmount: 100000,
+        interestRate: 8,
+        amortizationUnit: "hours",
+        termLength: 35000,
+
+        debtor: debtor,
+        debtorFee: 0,
+        creditorFee: 0
+        // hardcoded
+        relayer: defaultAccount,
+        relayerFee: 0,
+
+        underwriter: '0x0000000000000000000000000000000000000000', //to be added
+        underwriterRiskRating: new BigNumber(0),
+        underwriterFee: new BigNumber(0),
+        underwriterSignature: {
+            "r": "",
+            "s": "",
+            "v": 0
+        },
+
+        relayer: '0x0000000000000000000000000000000000000000',
+        relayerFee: 0,
+
+        salt: new BigNumber(Math.floor(Math.random() * 100000))
+    };
 }
 
 
