@@ -60,7 +60,7 @@ function milestones(transactions, users, revenue){
 // DHARMA API 
 // https://developer.dharma.io/tutorials/dharma-js
 
-function dharmaloancreate(){
+function loancreate(){
 
 	const provider = window.web3.currentProvider;
 	const dharma = new Dharma(provider);
@@ -70,7 +70,9 @@ function dharmaloancreate(){
 // import { Dharma } from "@dharmaprotocol/dharma.js";
 // const host = "http://localhost:8545";
 
-
+function loanaccept(){
+	
+}
 
 // RCN API
 // https://github.com/ripio/rcn-network
