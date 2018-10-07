@@ -1,6 +1,17 @@
 // Setup Stuff 
 
-var Web3 = require('web3');
+window.addEventListener('load', function() {
+
+  // Check if Web3 has been injected by the browser:
+  if (typeof web3 !== 'undefined') {
+    // You have a web3 browser! Continue below!
+    startApp(web3);
+  } else {
+     // Warn the user that they need to get a web3 browser
+     // Or install MetaMask, maybe with a nice graphic.
+  }
+
+})// mapping(address => uint256) public accountByAddress;
 
 // const provider = window.web3.currentProvider;
 // const dharma = new Dharma(provider);
@@ -22,6 +33,11 @@ function  bloomCheck(){
 	}
 }
 
+
+
+
+
+
 // DHARMA API 
 // https://developer.dharma.io/tutorials/dharma-js
 
@@ -34,7 +50,6 @@ function  bloomCheck(){
 
 // RCN API
 // https://github.com/ripio/rcn-network
-
 
 // function createLoan(
 //     address _oracle,
