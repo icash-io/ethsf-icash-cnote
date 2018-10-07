@@ -6,6 +6,7 @@
 // const dharma = new Dharma(provider);
 
 
+
 // Functions/API that we need. 
 
 // Bloom API: Binary check if there is an associated address with account.  Web3
@@ -14,14 +15,19 @@
 // Make sure to run apache php server: php -S 0.0.0.0:8008
 
 function  bloomCheck(){
-	$("#bloomid").attr("src","./images/bloomID.png"); //jquery call
 
-	alert("Next Step");
+
+	var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+	var URL = "https://bloom.co/app/signin";
+	var win = window.open(URL, "_blank", strWindowFeatures);
+
+	setTimeout(func, 15000);
+		function func() {
+		    $("#bloomid").attr("src","./images/bloomID.png"); //jquery call
+		}
 
 	accountRegistry = AccountRegistry.at("[0xfbc650e80d6796dff3101457eac4af994e4d2062]");
 	hasBloomId = accountRegistry.addressBelongsToAccount.call(address);
-
-	alert("Smart Contract activated");
 
 	if(hasBloomId == 1){
 		$("#bloomid").attr("src","./images/bloomID2.png"); //jquery call
