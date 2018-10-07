@@ -235,6 +235,20 @@ function instantiateDharma() {
     return new Dharma.default(web3.currentProvider, dharmaConfig);
 }
 
+function dharmaloancreate(){
+	const loanRequest = await LoanRequest.create(dharma, {
+    principalAmount: 100,
+    principalToken: "ETH",
+    collateralAmount: 1,
+    collateralToken: "ETH",
+    interestRate: 8,
+    termDuration: 48,
+    termUnit: "months",
+    debtorAddress: "0xd2f45e02ab7b190ac9a87b743eab4c8f2ed0e491",
+    expiresInDuration: 5,
+    expiresInUnit: "days",
+});
+}
 // RCN API
 // https://github.com/ripio/rcn-network
 
