@@ -17,6 +17,7 @@ const transactionObject = {
 
 // Bloom API: Binary check if there is an associated address with account.  Web3
 // https://bloom.co/docs/contracts/accounts#address-belongs-to-account
+// testnet address: 0xfbc650e80d6796dff3101457eac4af994e4d2062
 
 accountRegistry = AccountRegistry.at("[address of registry contract]")
 hasBloomId = accountRegistry.addressBelongsToAccount.call(address)
