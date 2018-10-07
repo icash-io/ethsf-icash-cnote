@@ -25,7 +25,8 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "gulp": "^3.9.1",
-    "nodemon": "^1.14.11"
+    "nodemon": "^1.14.11",
+    "web3": "^1.0.0-beta.36"
   },
   "dependencies": {
     "add": "^2.0.6",
